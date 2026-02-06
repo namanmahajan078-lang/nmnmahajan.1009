@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium | Naman Lab</title>
+    <style>
+        :root { --neon: #00d4ff; }
+        body { 
+            margin: 0; background: #000; color: white; font-family: 'Inter', sans-serif;
+            display: flex; align-items: center; justify-content: center; min-height: 100vh;
+        }
+        .main-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%); filter: blur(100px); }
+        
+        .premium-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(0, 212, 255, 0.3);
+            width: 90%; max-width: 600px; padding: 60px; border-radius: 50px; text-align: center;
+            backdrop-filter: blur(50px); box-shadow: 0 0 50px rgba(0, 212, 255, 0.1);
+        }
+        .badge { background: var(--neon); color: black; padding: 5px 15px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; margin-bottom: 20px; display: inline-block; }
+        h1 { font-size: 3rem; margin: 0; color: white; text-shadow: 0 0 30px rgba(255,255,255,0.2); }
+        .price { font-size: 5rem; font-weight: 900; margin: 20px 0; color: var(--neon); }
+        
+        .action-area { display: flex; flex-direction: column; gap: 15px; margin-top: 40px; }
+        .p-btn { padding: 20px; border-radius: 20px; text-decoration: none; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; transition: 0.5s; }
+        .p-fiverr { background: #1dbf73; color: white; }
+        .p-dm { background: white; color: black; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
+        .p-lab { color: #444; font-size: 0.8rem; }
+        .p-btn:hover { letter-spacing: 3px; box-shadow: 0 0 40px rgba(0, 212, 255, 0.4); }
+    </style>
+</head>
+<body>
+    <div class="main-glow"></div>
+    <div class="premium-card">
+        <span class="badge">ELITE STRATEGY</span>
+        <h1>PREMIUM</h1>
+        <div class="price">$25</div>
+        <p style="color: #888; font-size: 1.1rem;">High-authority long-form blogs with deep SEO research.</p>
+        <p style="color: var(--neon);">1220 Words • 4 Day Elite Delivery</p>
+        
+        <div class="action-area">
+            <a href="https://fiverr.com/your-link" class="p-btn p-fiverr">Go To Fiverr</a>
+            <a href="https://instagram.com/namann.1009" class="p-btn p-dm">DM For More Inquiry</a>
+            <a href="index.html" class="p-btn p-lab">Return to Lab</a>
+        </div>
+    </div>
+</body>
+</html>

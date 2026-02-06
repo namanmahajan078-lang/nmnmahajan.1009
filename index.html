@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naman Mahajan | Digital Architect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --accent: #00d4ff;
+            --accent-glow: rgba(0, 212, 255, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-gray: #a1a1a1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        /* --- Background Decoration --- */
+        .glow-sphere {
+            position: fixed; top: -10%; right: -10%; width: 500px; height: 500px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            z-index: -1; filter: blur(80px);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 20px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid var(--border);
+        }
+        .logo { font-family: 'Syncopate', sans-serif; font-size: 1.2rem; letter-spacing: 2px; color: var(--accent); }
+        .nav-links a { color: white; text-decoration: none; margin-left: 30px; font-size: 0.9rem; opacity: 0.8; transition: 0.3s; }
+        .nav-links a:hover { opacity: 1; color: var(--accent); }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; padding: 0 20px;
+        }
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem); font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase; line-height: 0.9; margin-bottom: 20px;
+        }
+        .hero p { color: var(--text-gray); max-width: 600px; font-size: 1.2rem; margin-bottom: 30px; }
+        .hero .accent-text { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
+
+        /* --- Bento Grid Section --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
+        .section-title { font-family: 'Syncopate', sans-serif; margin-bottom: 50px; font-size: 2rem; }
+        
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(200px, auto); gap: 20px;
+        }
+        .bento-item {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px;
+            padding: 40px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .bento-item:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .large { grid-column: span 2; }
+        .tall { grid-row: span 2; }
+
+        /* --- Service Cards Enhancements --- */
+        .price { font-size: 3rem; font-weight: 800; color: var(--accent); margin: 15px 0; }
+        .btn-premium {
+            background: white; color: black; padding: 15px 30px; border-radius: 12px;
+            text-decoration: none; font-weight: bold; display: inline-block; transition: 0.3s;
+        }
+        .btn-premium:hover { background: var(--accent); color: white; }
+
+        /* --- Tabs --- */
+        .tabs-container { margin-bottom: 40px; text-align: center; }
+        .tab-btn {
+            background: none; border: 1px solid var(--border); color: white;
+            padding: 10px 25px; border-radius: 30px; cursor: pointer; margin: 5px; transition: 0.3s;
+        }
+        .tab-btn.active { background: var(--accent); color: black; border-color: var(--accent); }
+
+        /* --- Contact Section --- */
+        .contact-footer {
+            text-align: center; padding: 100px 20px; background: linear-gradient(to top, #00d4ff15, transparent);
+        }
+        .social-row { display: flex; justify-content: center; gap: 30px; margin-top: 40px; flex-wrap: wrap; }
+        .social-link {
+            text-decoration: none; color: white; display: flex; align-items: center; gap: 10px;
+            padding: 15px 30px; border: 1px solid var(--border); border-radius: 50px; transition: 0.3s;
+        }
+        .social-link:hover { background: white; color: black; }
+
+        /* --- Chatbot --- */
+        .chat-btn { position: fixed; bottom: 30px; right: 30px; background: var(--accent); width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer; box-shadow: 0 0 20px var(--accent-glow); z-index: 1000; }
+
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .large, .tall { grid-column: span 1; grid-row: span 1; }
+            nav { padding: 20px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-sphere"></div>
+
+    <nav>
+        <div class="logo">NAMANN</div>
+        <div class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#about">Philosophy</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <p>SEO content strategy & Visual storytelling</p>
+        <h1>Architect of <span class="accent-text">Digital</span> Narratives</h1>
+        <p>I don't just write blogs; I build conversion machines. High-end cinematic editing meets data-driven SEO strategy.</p>
+        <a href="#services" class="btn-premium">Explore My Workspace</a>
+    </section>
+
+    <div class="container" id="about">
+        <h2 class="section-title">The Philosophy</h2>
+        <div class="bento-grid">
+            <div class="bento-item large">
+                <h3>Why Naman Mahajan?</h3>
+                <p style="margin-top: 20px; color: var(--text-gray);">In a world flooded with AI-generated noise, I provide the human edge. Every word is calculated using psychological triggers and technical SEO parameters. My mission is to elevate brands from "just another link" to "the only authority" in their niche.</p>
+            </div>
+            <div class="bento-item">
+                <h3>Technical SEO</h3>
+                <p style="font-size: 0.9rem; color: var(--text-gray);">Keywords aren't just words; they are search intent blueprints. I map out the journey of your user from the first click to the final purchase.</p>
+            </div>
+            <div class="bento-item">
+                <h3>Cinematic Art</h3>
+                <p style="font-size: 0.9rem; color: var(--text-gray);">Visual storytelling that captures attention in the first 2 seconds. From color grading to sound design, every frame matters.</p>
+            </div>
+            <div class="bento-item large">
+                <h3>The 1% Rule</h3>
+                <p style="font-size: 0.9rem; color: var(--text-gray);">I collaborate selectively with brands that aim to position themselves in the top tier of their industry. I believe in quality over quantity, and every project I take on is driven by strategy, not volume. My process begins with in-depth market research and detailed competitor analysis, ensuring that every piece of content is informed, intentional, and results-focused.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="services">
+        <h2 class="section-title">Core Services</h2>
+        
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('copy')">Copywriting</button>
+            <button class="tab-btn" onclick="switchTab('video')">Video Editing</button>
+        </div>
+
+        <div class="bento-grid" id="copy-grid">
+            <div class="bento-item">
+                <h3>Starter</h3>
+                <div class="price">$10</div>
+                <p>300 Words • 2 Days Delivery</p>
+                <p style="font-size: 0.8rem; margin: 15px 0; color: var(--text-gray);">Perfect for quick announcements or product descriptions.</p>
+                <a href="basic.html" class="btn-premium">Select</a>
+            </div>
+            <div class="bento-item tall" style="border: 1px solid var(--accent); background: linear-gradient(145deg, rgba(0, 212, 255, 0.05), transparent);">
+                <h3 style="color: var(--accent);">Authority Package</h3>
+                <div class="price">$25</div>
+                <p>1220+ Words • 4 Days Delivery</p>
+                <ul style="margin: 20px 0; font-size: 0.9rem; list-style: none;">
+                    <li>✓ Deep Topic Research</li>
+                    <li>✓ Competitor Keyword Mapping</li>
+                    <li>✓ Internal Linking Strategy</li>
+                    <li>✓ High Conversion Hooks</li>
+                </ul>
+                <a href="premium.html" class="btn-premium" style="background: var(--accent);">Most Popular</a>
+            </div>
+            <div class="bento-item">
+                <h3>Growth</h3>
+                <div class="price">$20</div>
+                <p>700 Words • 3 Days Delivery</p>
+                <p style="font-size: 0.8rem; margin: 15px 0; color: var(--text-gray);">Ideal for weekly blog updates to keep your site fresh.</p>
+                <a href="standard.html" class="btn-premium">Select</a>
+            </div>
+        </div>
+
+        <div class="bento-grid" id="video-grid" style="display: none;">
+            <div class="bento-item">
+                <h3>Short Form</h3>
+                <div class="price">$3</div>
+                <p>60 Sec • Reels/TikTok/Shorts</p>
+                <p style="font-size: 0.8rem; margin: 15px 0; color: var(--text-gray);">Viral-ready edits with dynamic subtitles and sound FX.</p>
+                <a href="#" class="btn-premium">Select</a>
+            </div>
+            <div class="bento-item tall" style="border: 1px solid var(--accent); background: linear-gradient(145deg, rgba(0, 212, 255, 0.05), transparent);">
+                <h3 style="color: var(--accent);">Cinematic Story</h3>
+                <div class="price">$8</div>
+                <p>Up to 10 Mins • Full Narrative</p>
+                <ul style="margin: 20px 0; font-size: 0.9rem; list-style: none;">
+                    <li>✓ Advanced Color Grading</li>
+                    <li>✓ Professional Sound Design</li>
+                    <li>✓ Seamless Transitions</li>
+                    <li>✓ Multi-cam Syncing</li>
+                </ul>
+                <a href="#" class="btn-premium" style="background: var(--accent);">Go Pro</a>
+            </div>
+            <div class="bento-item">
+                <h3>Standard Edit</h3>
+                <div class="price">$5</div>
+                <p>5 Mins • YouTube/Ads</p>
+                <p style="font-size: 0.8rem; margin: 15px 0; color: var(--text-gray);">Clean professional cuts for brand storytelling.</p>
+                <a href="#" class="btn-premium">Select</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="contact-footer" id="contact">
+        <h2 class="section-title">Let's Build Something Great</h2>
+        <p>Available for freelance projects and long-term consultations.</p>
+        
+        <div class="social-row">
+            <a href="mailto:namanmahajan078@gmail.com" class="social-link"><span>📧</span> Email Me</a>
+            <a href="https://x.com/Nmnmahajan078" target="_blank" class="social-link"><span>𝕏</span> Twitter / X</a>
+            <a href="https://instagram.com/namann.1009" target="_blank" class="social-link"><span>📸</span> Instagram</a>
+            <a href="https://www.fiverr.com/s/YRA9ajd" target="_blank" class="social-link"><span>💼</span> Fiverr Portfolio</a>
+        </div>
+    </section>
+
+    <button class="chat-btn">✨</button>
+
+    <script>
+        function switchTab(type) {
+            const copyGrid = document.getElementById('copy-grid');
+            const videoGrid = document.getElementById('video-grid');
+            const btns = document.querySelectorAll('.tab-btn');
+
+            if (type === 'copy') {
+                copyGrid.style.display = 'grid';
+                videoGrid.style.display = 'none';
+                btns[0].classList.add('active');
+                btns[1].classList.remove('active');
+            } else {
+                copyGrid.style.display = 'none';
+                videoGrid.style.display = 'grid';
+                btns[0].classList.remove('active');
+                btns[1].classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

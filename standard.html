@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard | Naman Lab</title>
+    <style>
+        :root { --electric: #00d4ff; }
+        body { 
+            margin: 0; background: #040608; color: white; 
+            font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden;
+        }
+        .glow-1 { position: absolute; top: -10%; left: -10%; width: 500px; height: 500px; background: var(--electric); filter: blur(180px); opacity: 0.15; }
+        .glow-2 { position: absolute; bottom: -10%; right: -10%; width: 500px; height: 500px; background: var(--electric); filter: blur(180px); opacity: 0.15; }
+        
+        .box {
+            background: rgba(10, 15, 20, 0.7); border: 1px solid rgba(0, 212, 255, 0.2);
+            width: 90%; max-width: 500px; padding: 50px; border-radius: 30px; text-align: center;
+            backdrop-filter: blur(30px); position: relative;
+        }
+        .top-nav { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; opacity: 0.6; font-size: 0.7rem; letter-spacing: 2px; }
+        h2 { text-transform: uppercase; letter-spacing: 3px; color: var(--electric); margin: 0; }
+        .price { font-size: 4rem; font-weight: 800; margin: 20px 0; color: white; }
+        
+        .btn-stack { display: grid; gap: 15px; margin-top: 30px; }
+        .s-btn { padding: 18px; border-radius: 10px; text-decoration: none; font-weight: bold; transition: 0.4s; }
+        .s-fiverr { background: #1dbf73; color: white; box-shadow: 0 10px 20px rgba(29,191,115,0.2); }
+        .s-dm { background: var(--electric); color: black; }
+        .s-lab { color: #555; font-size: 0.8rem; }
+        .s-btn:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body>
+    <div class="glow-1"></div><div class="glow-2"></div>
+    <div class="box">
+        <div class="top-nav"><span>X/TWITTER</span> • <span>INSTAGRAM</span> • <span>EMAIL</span></div>
+        <h2>Standard Service</h2>
+        <div class="price">$20</div>
+        <p style="color: #aaa; line-height: 1.6;">SEO-optimized blogs that improve search visibility while delivering value.</p>
+        <p style="font-weight: bold;">700 Words • 3 Days Delivery</p>
+        <div class="btn-stack">
+            <a href="hthttps://www.fiverr.com/s/rEvNRvx" class="s-btn s-fiverr">Go To Fiverr</a>
+            <a href="https://instagram.com/namann.1009" class="s-btn s-dm">DM For More Inquiry</a>
+            <a href="index.html" class="s-btn s-lab">Return to Lab</a>
+        </div>
+    </div>
+</body>
+</html>
