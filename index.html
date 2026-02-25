@@ -3,258 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naman Mahajan | Digital Architect</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <title>Naman Mahajan · genz · gaming · edit collage</title>
+    <!-- Tailwind + GSAP + fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --bg: #050505;
-            --accent: #00d4ff;
-            --accent-glow: rgba(0, 212, 255, 0.3);
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-            --text-gray: #a1a1a1;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        :root {
+            --bg-dark: #050505;
+            --accent: #3b82f6;
+            --glass: rgba(255,255,255,0.03);
+        }
         body {
-            background-color: var(--bg);
+            background-color: var(--bg-dark);
             color: white;
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
+            cursor: none;
         }
 
-        /* --- Custom Scrollbar --- */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-
-        /* --- Background Decoration --- */
-        .glow-sphere {
-            position: fixed; top: -10%; right: -10%; width: 500px; height: 500px;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            z-index: -1; filter: blur(80px);
+        /* custom cursor */
+        #cursor {
+            width: 20px; height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+        #cursor-blur {
+            width: 200px; height: 200px;
+            background: rgba(59, 130, 246, 0.15);
+            filter: blur(80px);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
         }
 
-        /* --- Navigation --- */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 20px 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid var(--border);
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
         }
-        .logo { font-family: 'Syncopate', sans-serif; font-size: 1.2rem; letter-spacing: 2px; color: var(--accent); }
-        .nav-links a { color: white; text-decoration: none; margin-left: 30px; font-size: 0.9rem; opacity: 0.8; transition: 0.3s; }
-        .nav-links a:hover { opacity: 1; color: var(--accent); }
+        .glass-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.06);
+        }
 
-        /* --- Hero Section --- */
-        .hero {
-            height: 100vh; display: flex; flex-direction: column; justify-content: center;
-            align-items: center; text-align: center; padding: 0 20px;
+        /* static grid background */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+            z-index: -1;
         }
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem); font-family: 'Syncopate', sans-serif;
-            text-transform: uppercase; line-height: 0.9; margin-bottom: 20px;
-        }
-        .hero p { color: var(--text-gray); max-width: 600px; font-size: 1.2rem; margin-bottom: 30px; }
-        .hero .accent-text { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
 
-        /* --- Bento Grid Section --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
-        .section-title { font-family: 'Syncopate', sans-serif; margin-bottom: 50px; font-size: 2rem; }
-        
-        .bento-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(200px, auto); gap: 20px;
+        @keyframes waterWave {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
         }
-        .bento-item {
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px;
-            padding: 40px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; justify-content: center;
+        .wave-effect {
+            position: absolute;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: waterWave 0.8s ease-out forwards;
         }
-        .bento-item:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        
-        .large { grid-column: span 2; }
-        .tall { grid-row: span 2; }
 
-        /* --- Service Cards Enhancements --- */
-        .price { font-size: 3rem; font-weight: 800; color: var(--accent); margin: 15px 0; }
-        .btn-premium {
-            background: white; color: black; padding: 15px 30px; border-radius: 12px;
-            text-decoration: none; font-weight: bold; display: inline-block; transition: 0.3s;
+        .gradient-text {
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .btn-premium:hover { background: var(--accent); color: white; }
 
-        /* --- Tabs --- */
-        .tabs-container { margin-bottom: 40px; text-align: center; }
-        .tab-btn {
-            background: none; border: 1px solid var(--border); color: white;
-            padding: 10px 25px; border-radius: 30px; cursor: pointer; margin: 5px; transition: 0.3s;
+        /* sections & parallax collage */
+        section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+            z-index: 2;
+            overflow: hidden;
         }
-        .tab-btn.active { background: var(--accent); color: black; border-color: var(--accent); }
 
-        /* --- Contact Section --- */
-        .contact-footer {
-            text-align: center; padding: 100px 20px; background: linear-gradient(to top, #00d4ff15, transparent);
+        /* collage container – absolute fill, holds all floating images */
+        .parallax-collage {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;      /* so buttons stay clickable */
         }
-        .social-row { display: flex; justify-content: center; gap: 30px; margin-top: 40px; flex-wrap: wrap; }
-        .social-link {
-            text-decoration: none; color: white; display: flex; align-items: center; gap: 10px;
-            padding: 15px 30px; border: 1px solid var(--border); border-radius: 50px; transition: 0.3s;
-        }
-        .social-link:hover { background: white; color: black; }
 
-        /* --- Chatbot --- */
-        .chat-btn { position: fixed; bottom: 30px; right: 30px; background: var(--accent); width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer; box-shadow: 0 0 20px var(--accent-glow); z-index: 1000; }
-
-        @media (max-width: 768px) {
-            .bento-grid { grid-template-columns: 1fr; }
-            .large, .tall { grid-column: span 1; grid-row: span 1; }
-            nav { padding: 20px; }
-            .nav-links { display: none; }
+        /* each image in the collage */
+        .parallax-item {
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            will-change: transform;
+            filter: brightness(0.6) saturate(1.3);
+            border-radius: 12px;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            pointer-events: none;       /* keep interaction with text/buttons */
         }
+
+        /* overlay for readability, sits above images but below text */
+        .section-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(0,0,0,0.3), rgba(0,0,0,0.85));
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* all text/content should be above overlay */
+        section > *:not(.parallax-collage):not(.section-overlay) {
+            position: relative;
+            z-index: 3;
+        }
+
+        .hidden-section { display: none; }
+
+        .nav-link { transition: color 0.2s; }
     </style>
 </head>
 <body>
 
-    <div class="glow-sphere"></div>
+    <!-- custom cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-blur"></div>
+    <div class="bg-grid"></div>
 
-    <nav>
-        <div class="logo">NAMANN</div>
-        <div class="nav-links">
-            <a href="#services">Services</a>
-            <a href="#about">Philosophy</a>
-            <a href="#contact">Contact</a>
+    <!-- navigation (same) -->
+    <nav class="fixed top-0 w-full z-50 p-6 flex justify-between items-center backdrop-blur-md border-b border-white/10">
+        <div class="text-xl font-extrabold tracking-tighter uppercase">Naman <span class="text-blue-500">.</span></div>
+        <div class="space-x-8 text-sm font-medium uppercase tracking-widest opacity-70">
+            <a href="#" class="hover:text-blue-400 transition">Services</a>
+            <a href="#" class="hover:text-blue-400 transition">Philosophy</a>
+            <a href="https://www.fiverr.com" target="_blank" class="px-5 py-2 bg-white text-black rounded-full font-bold hover:bg-blue-500 transition hover:text-white">Hire Me</a>
         </div>
     </nav>
 
-    <section class="hero">
-        <p>SEO content strategy & Visual storytelling</p>
-        <h1>Architect of <span class="accent-text">Digital</span> Narratives</h1>
-        <p>I don't just write blogs; I build conversion machines. High-end cinematic editing meets data-driven SEO strategy.</p>
-        <a href="#services" class="btn-premium">Explore My Workspace</a>
-    </section>
-
-    <div class="container" id="about">
-        <h2 class="section-title">The Philosophy</h2>
-        <div class="bento-grid">
-            <div class="bento-item large">
-                <h3>Why Naman Mahajan?</h3>
-                <p style="margin-top: 20px; color: var(--text-gray);">In a world flooded with AI-generated noise, I provide the human edge. Every word is calculated using psychological triggers and technical SEO parameters. My mission is to elevate brands from "just another link" to "the only authority" in their niche.</p>
-            </div>
-            <div class="bento-item">
-                <h3>Technical SEO</h3>
-                <p style="font-size: 0.9rem; color: var(--text-gray);">Keywords aren't just words; they are search intent blueprints. I map out the journey of your user from the first click to the final purchase.</p>
-            </div>
-            <div class="bento-item">
-                <h3>Cinematic Art</h3>
-                <p style="font-size: 0.9rem; color: var(--text-gray);">Visual storytelling that captures attention in the first 2 seconds. From color grading to sound design, every frame matters.</p>
-            </div>
-            <div class="bento-item large">
-                <h3>The 1% Rule</h3>
-                <p style="font-size: 0.9rem; color: var(--text-gray);">I collaborate selectively with brands that aim to position themselves in the top tier of their industry. I believe in quality over quantity, and every project I take on is driven by strategy, not volume. My process begins with in-depth market research and detailed competitor analysis, ensuring that every piece of content is informed, intentional, and results-focused.</p>
-            </div>
+    <!-- ========== SECTION 1 : HERO — gaming + editing collage (4-5 images) ========== -->
+    <section id="home-section" class="text-center">
+        <!-- collage of 5 images: gaming pc, editing timeline, keyboard, neon, dual monitors -->
+        <div class="parallax-collage">
+            <!-- gaming pc with rgb (back left) -->
+            <div class="parallax-item" data-speed="-0.15" style="top: 5%; left: -2%; width: 38%; height: 40%; background-image: url('https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-3deg);"></div>
+            <!-- video editing timeline (center, large) -->
+            <div class="parallax-item" data-speed="-0.25" style="top: 15%; left: 25%; width: 45%; height: 50%; background-image: url('https://images.unsplash.com/photo-1574717024453-354056afc0c1?q=80&w=2070&auto=format&fit=crop'); transform: rotate(2deg); border: 2px solid rgba(59,130,246,0.3);"></div>
+            <!-- mechanical keyboard typing (bottom right) -->
+            <div class="parallax-item" data-speed="-0.35" style="bottom: 5%; right: 5%; width: 32%; height: 32%; background-image: url('https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=2070&auto=format&fit=crop'); transform: rotate(4deg);"></div>
+            <!-- dual monitor setup (left middle) -->
+            <div class="parallax-item" data-speed="-0.2" style="top: 40%; left: 8%; width: 28%; height: 30%; background-image: url('https://images.unsplash.com/photo-1598550476446-0c4a4d1a3d6f?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-5deg);"></div>
+            <!-- genz neon / gaming vibe (top right) -->
+            <div class="parallax-item" data-speed="-0.3" style="top: 0%; right: -2%; width: 30%; height: 35%; background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop'); transform: rotate(6deg); opacity: 0.9;"></div>
         </div>
-    </div>
+        <div class="section-overlay"></div>
 
-    <div class="container" id="services">
-        <h2 class="section-title">Core Services</h2>
-        
-        <div class="tabs-container">
-            <button class="tab-btn active" onclick="switchTab('copy')">Copywriting</button>
-            <button class="tab-btn" onclick="switchTab('video')">Video Editing</button>
-        </div>
-
-        <div class="bento-grid" id="copy-grid">
-            <div class="bento-item">
-                <h3>Starter</h3>
-                <div class="price">$10</div>
-                <p>300 Words • 2 Days Delivery</p>
-                <p style="font-size: 0.8rem; margin: 15px 0; color: var(--text-gray);">Perfect for quick announcements or product descriptions.</p>
-                <a href="basic.html" class="btn-premium">Select</a>
-            </div>
-            <div class="bento-item tall" style="border: 1px solid var(--accent); background: linear-gradient(145deg, rgba(0, 212, 255, 0.05), transparent);">
-                <h3 style="color: var(--accent);">Authority Package</h3>
-                <div class="price">$25</div>
-                <p>1220+ Words • 4 Days Delivery</p>
-                <ul style="margin: 20px 0; font-size: 0.9rem; list-style: none;">
-                    <li>✓ Deep Topic Research</li>
-                    <li>✓ Competitor Keyword Mapping</li>
-                    <li>✓ Internal Linking Strategy</li>
-                    <li>✓ High Conversion Hooks</li>
-                </ul>
-                <a href="premium.html" class="btn-premium" style="background: var(--accent);">Most Popular</a>
-            </div>
-            <div class="bento-item">
-                <h3>Growth</h3>
-                <div class="price">$20</div>
-                <p>700 Words • 3 Days Delivery</p>
-                <p style="font-size: 0.8rem; margin: 15px 0; color: var(--text-gray);">Ideal for weekly blog updates to keep your site fresh.</p>
-                <a href="standard.html" class="btn-premium">Select</a>
-            </div>
-        </div>
-
-        <div class="bento-grid" id="video-grid" style="display: none;">
-            <div class="bento-item">
-                <h3>Short Form</h3>
-                <div class="price">$3</div>
-                <p>60 Sec • Reels/TikTok/Shorts</p>
-                <p style="font-size: 0.8rem; margin: 15px 0; color: var(--text-gray);">Viral-ready edits with dynamic subtitles and sound FX.</p>
-                <a href="#" class="btn-premium">Select</a>
-            </div>
-            <div class="bento-item tall" style="border: 1px solid var(--accent); background: linear-gradient(145deg, rgba(0, 212, 255, 0.05), transparent);">
-                <h3 style="color: var(--accent);">Cinematic Story</h3>
-                <div class="price">$8</div>
-                <p>Up to 10 Mins • Full Narrative</p>
-                <ul style="margin: 20px 0; font-size: 0.9rem; list-style: none;">
-                    <li>✓ Advanced Color Grading</li>
-                    <li>✓ Professional Sound Design</li>
-                    <li>✓ Seamless Transitions</li>
-                    <li>✓ Multi-cam Syncing</li>
-                </ul>
-                <a href="#" class="btn-premium" style="background: var(--accent);">Go Pro</a>
-            </div>
-            <div class="bento-item">
-                <h3>Standard Edit</h3>
-                <div class="price">$5</div>
-                <p>5 Mins • YouTube/Ads</p>
-                <p style="font-size: 0.8rem; margin: 15px 0; color: var(--text-gray);">Clean professional cuts for brand storytelling.</p>
-                <a href="#" class="btn-premium">Select</a>
-            </div>
-        </div>
-    </div>
-
-    <section class="contact-footer" id="contact">
-        <h2 class="section-title">Let's Build Something Great</h2>
-        <p>Available for freelance projects and long-term consultations.</p>
-        
-        <div class="social-row">
-            <a href="mailto:namanmahajan078@gmail.com" class="social-link"><span>📧</span> Email Me</a>
-            <a href="https://x.com/Nmnmahajan078" target="_blank" class="social-link"><span>𝕏</span> Twitter / X</a>
-            <a href="https://instagram.com/namann.1009" target="_blank" class="social-link"><span>📸</span> Instagram</a>
-            <a href="https://www.fiverr.com/s/YRA9ajd" target="_blank" class="social-link"><span>💼</span> Fiverr Portfolio</a>
+        <h1 class="text-5xl md:text-8xl font-extrabold mb-6 gradient-text" id="main-title">
+            Architect of <br> digital narratives
+        </h1>
+        <div class="max-w-2xl mx-auto opacity-80 leading-relaxed text-lg relative z-10">
+            <p class="mb-4">You don’t need another “content writer.”</p>
+            <p class="mb-4">You need an asset — something that works for you 24/7, brings traffic while you sleep, and quietly turns visitors into paying customers.</p>
+            <p class="text-blue-400 font-bold mb-8">High-end cinematic editing meets data-driven SEO strategy.</p>
+            
+            <button onclick="navigateToWorkspace()" class="group relative px-8 py-4 bg-transparent border border-white/20 rounded-full overflow-hidden transition-all hover:border-blue-500">
+                <span class="relative z-10 font-bold tracking-widest uppercase text-sm">Explore My Workspace</span>
+                <div class="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            </button>
         </div>
     </section>
 
-    <button class="chat-btn">✨</button>
+    <!-- ========== SECTION 2 : PHILOSOPHY — again 4-5 image collage (video editing, typing, pc parts) ========== -->
+    <section id="philosophy-section">
+        <div class="parallax-collage">
+            <!-- timeline closeup (main) -->
+            <div class="parallax-item" data-speed="-0.2" style="top: 0%; left: 10%; width: 40%; height: 45%; background-image: url('https://images.unsplash.com/photo-1574717024653-8fd9e7f3a1c3?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-2deg);"></div>
+            <!-- hands typing on RGB keyboard -->
+            <div class="parallax-item" data-speed="-0.3" style="bottom: 5%; right: 5%; width: 35%; height: 38%; background-image: url('https://images.unsplash.com/photo-1595225476474-87563907c212?q=80&w=2070&auto=format&fit=crop'); transform: rotate(3deg);"></div>
+            <!-- gaming mouse + pad (genz) -->
+            <div class="parallax-item" data-speed="-0.25" style="top: 20%; right: 15%; width: 28%; height: 28%; background-image: url('https://images.unsplash.com/photo-1603487742131-4160c999306f?q=80&w=2070&auto=format&fit=crop'); transform: rotate(8deg);"></div>
+            <!-- editing studio with monitors -->
+            <div class="parallax-item" data-speed="-0.15" style="bottom: 15%; left: 2%; width: 32%; height: 34%; background-image: url('https://images.unsplash.com/photo-1587202372634-3270e8c0d9b1?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-4deg);"></div>
+            <!-- neon gamer setup (vibe) -->
+            <div class="parallax-item" data-speed="-0.35" style="top: 30%; left: 25%; width: 30%; height: 30%; background-image: url('https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=2070&auto=format&fit=crop'); transform: rotate(5deg); opacity: 0.8;"></div>
+        </div>
+        <div class="section-overlay"></div>
+
+        <h2 class="text-4xl font-bold mb-12 text-center uppercase tracking-tighter">The Philosophy</h2>
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="glass-card p-8 rounded-3xl">
+                <div class="text-blue-500 mb-4 text-3xl font-black">01</div>
+                <h3 class="text-xl font-bold mb-4">Technical SEO</h3>
+                <p class="text-sm opacity-60">Keywords aren't just words; they are search intent blueprints. I map out the journey from first click to final purchase.</p>
+            </div>
+            <div class="glass-card p-8 rounded-3xl">
+                <div class="text-blue-500 mb-4 text-3xl font-black">02</div>
+                <h3 class="text-xl font-bold mb-4">Cinematic Art</h3>
+                <p class="text-sm opacity-60">Visual storytelling that captures attention in 2 seconds. From color grading to sound design, every frame matters.</p>
+            </div>
+            <div class="glass-card p-8 rounded-3xl border-blue-500/50">
+                <div class="text-blue-500 mb-4 text-3xl font-black">03</div>
+                <h3 class="text-xl font-bold mb-4">The 1% Rule</h3>
+                <p class="text-sm opacity-60">I collaborate selectively with brands aiming for the top tier. Strategy-driven quality over high-volume noise.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 3 : RIG / WORKSPACE VIBE — collage of typing, editing, pc ========== -->
+    <section id="rig-section" class="justify-center items-center">
+        <div class="parallax-collage">
+            <!-- huge mechanical keyboard (foreground) -->
+            <div class="parallax-item" data-speed="-0.4" style="bottom: 0%; left: 5%; width: 45%; height: 40%; background-image: url('https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=2070&auto=format&fit=crop'); transform: rotate(2deg);"></div>
+            <!-- timeline on screen (center) -->
+            <div class="parallax-item" data-speed="-0.2" style="top: 10%; right: 10%; width: 38%; height: 42%; background-image: url('https://images.unsplash.com/photo-1574717024453-354056afc0c1?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-3deg); border: 2px solid var(--accent);"></div>
+            <!-- gaming pc with rgb (top left) -->
+            <div class="parallax-item" data-speed="-0.3" style="top: 0%; left: 15%; width: 30%; height: 32%; background-image: url('https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=2070&auto=format&fit=crop'); transform: rotate(5deg);"></div>
+            <!-- genz neon headset (bottom right) -->
+            <div class="parallax-item" data-speed="-0.25" style="bottom: 15%; right: 2%; width: 28%; height: 28%; background-image: url('https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-6deg);"></div>
+        </div>
+        <div class="section-overlay" style="background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.8));"></div>
+
+        <div class="relative z-10 text-center max-w-3xl mx-auto">
+            <span class="text-blue-400 tracking-[0.3em] text-sm font-bold">/// THE WORKSPACE</span>
+            <h2 class="text-5xl md:text-7xl font-black mt-4 mb-6 leading-tight">gaming. editing.<br>typing. creating.</h2>
+            <p class="text-white/70 text-lg">Behind every frame — a liquid timeline, a silent keyboard, and a machine that never sleeps.</p>
+            <div class="flex flex-wrap justify-center gap-4 mt-12">
+                <div class="glass-card px-6 py-3 rounded-full text-sm font-mono">⚡ 4K 120fps timeline</div>
+                <div class="glass-card px-6 py-3 rounded-full text-sm font-mono">🎮 RTX 4090 / i9</div>
+                <div class="glass-card px-6 py-3 rounded-full text-sm font-mono">⌨️ mechanical (typing)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 4 : PRICING / WORKSPACE (hidden initially) with subtle collage ========== -->
+    <section id="workspace-section" class="hidden-section">
+        <div class="parallax-collage">
+            <!-- soft editing desk -->
+            <div class="parallax-item" data-speed="-0.1" style="top: 10%; left: 5%; width: 35%; height: 30%; background-image: url('https://images.unsplash.com/photo-1587202372634-3270e8c0d9b1?q=80&w=2070&auto=format&fit=crop'); opacity: 0.5; transform: rotate(-2deg);"></div>
+            <!-- keyboard closeup -->
+            <div class="parallax-item" data-speed="-0.2" style="bottom: 5%; right: 5%; width: 30%; height: 28%; background-image: url('https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=2070&auto=format&fit=crop'); opacity: 0.5; transform: rotate(3deg);"></div>
+            <!-- gaming monitor -->
+            <div class="parallax-item" data-speed="-0.15" style="top: 30%; right: 15%; width: 28%; height: 28%; background-image: url('https://images.unsplash.com/photo-1598550476446-0c4a4d1a3d6f?q=80&w=2070&auto=format&fit=crop'); opacity: 0.5; transform: rotate(5deg);"></div>
+        </div>
+        <div class="section-overlay" style="background: rgba(0,0,0,0.7);"></div>
+
+        <h2 class="text-5xl font-black mb-16 text-center uppercase">Pricing & Packages</h2>
+        
+        <div class="max-w-6xl mx-auto w-full mb-20 relative z-10">
+            <h3 class="text-blue-500 font-bold mb-8 tracking-widest uppercase">/ Copywriting Services</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-8 rounded-2xl relative overflow-hidden" onclick="createWave(event)">
+                    <div class="text-2xl font-bold">$10</div>
+                    <div class="text-xs uppercase opacity-50 mb-4">Basic Pack</div>
+                    <ul class="text-sm space-y-2 mb-8">
+                        <li>300 Words</li>
+                        <li>2 Days Delivery</li>
+                    </ul>
+                    <a href="https://www.fiverr.com" class="block text-center py-2 bg-white/10 rounded-lg hover:bg-white hover:text-black transition">Select</a>
+                </div>
+                <div class="glass-card p-8 rounded-2xl relative border-blue-500/50" onclick="createWave(event)">
+                    <div class="absolute top-4 right-4 text-[10px] bg-blue-500 px-2 py-1 rounded">POPULAR</div>
+                    <div class="text-2xl font-bold">$20</div>
+                    <div class="text-xs uppercase opacity-50 mb-4">Growth Pack</div>
+                    <ul class="text-sm space-y-2 mb-8">
+                        <li>700 Words</li>
+                        <li>3 Days Delivery</li>
+                        <li>SEO Optimized</li>
+                    </ul>
+                    <a href="https://www.fiverr.com" class="block text-center py-2 bg-blue-500 rounded-lg hover:bg-blue-600 transition">Select</a>
+                </div>
+                <div class="glass-card p-8 rounded-2xl relative" onclick="createWave(event)">
+                    <div class="text-2xl font-bold">$25</div>
+                    <div class="text-xs uppercase opacity-50 mb-4">Authority Pack</div>
+                    <ul class="text-sm space-y-2 mb-8">
+                        <li>1220+ Words</li>
+                        <li>4 Days Delivery</li>
+                        <li>Deep Research</li>
+                    </ul>
+                    <a href="https://www.fiverr.com" class="block text-center py-2 bg-white/10 rounded-lg hover:bg-white hover:text-black transition">Select</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-6xl mx-auto w-full relative z-10">
+            <h3 class="text-blue-500 font-bold mb-8 tracking-widest uppercase">/ Video Editing Services</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-8 rounded-2xl" onclick="createWave(event)">
+                    <div class="text-2xl font-bold">$3</div>
+                    <div class="text-xs uppercase opacity-50 mb-4">Short Form</div>
+                    <p class="text-[10px] mb-4">Viral-ready edits with dynamic subtitles.</p>
+                    <a href="https://www.instagram.com/direct/t/yourid" class="block text-center py-2 border border-white/20 rounded-lg">DM to Order</a>
+                </div>
+                <div class="glass-card p-8 rounded-2xl" onclick="createWave(event)">
+                    <div class="text-2xl font-bold">$5</div>
+                    <div class="text-xs uppercase opacity-50 mb-4">Standard Edit</div>
+                    <p class="text-[10px] mb-4">Clean professional cuts for brand storytelling.</p>
+                    <a href="https://www.instagram.com/direct/t/yourid" class="block text-center py-2 border border-white/20 rounded-lg">DM to Order</a>
+                </div>
+                <div class="glass-card p-8 rounded-2xl" onclick="createWave(event)">
+                    <div class="text-2xl font-bold">$8</div>
+                    <div class="text-xs uppercase opacity-50 mb-4">Cinematic Story</div>
+                    <p class="text-[10px] mb-4">Advanced Color Grading & Sound Design.</p>
+                    <a href="https://www.instagram.com/direct/t/yourid" class="block text-center py-2 border border-white/20 rounded-lg">DM to Order</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
-        function switchTab(type) {
-            const copyGrid = document.getElementById('copy-grid');
-            const videoGrid = document.getElementById('video-grid');
-            const btns = document.querySelectorAll('.tab-btn');
+        gsap.registerPlugin(ScrollTrigger);
 
-            if (type === 'copy') {
-                copyGrid.style.display = 'grid';
-                videoGrid.style.display = 'none';
-                btns[0].classList.add('active');
-                btns[1].classList.remove('active');
-            } else {
-                copyGrid.style.display = 'none';
-                videoGrid.style.display = 'grid';
-                btns[0].classList.remove('active');
-                btns[1].classList.add('active');
-            }
-        }
-    </script>
-</body>
-</html>
+        // custom cursor
+        const cursor = document.getElementByI
