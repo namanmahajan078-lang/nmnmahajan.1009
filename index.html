@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naman Mahajan · genz · gaming · edit collage</title>
+    <title>Naman Mahajan · cinematic editing + gaming rig</title>
     <!-- Tailwind + GSAP + fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -11,10 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* ----- root & reset ----- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-dark: #050505;
-            --accent: #3b82f6;
+            --accent: #3b82f6;        /* electric blue */
             --glass: rgba(255,255,255,0.03);
         }
         body {
@@ -22,10 +23,10 @@
             color: white;
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
-            cursor: none;
+            cursor: none;              /* custom cursor later */
         }
 
-        /* custom cursor */
+        /* ----- custom cursor (kept from original) ----- */
         #cursor {
             width: 20px; height: 20px;
             background: white;
@@ -46,6 +47,7 @@
             z-index: 9998;
         }
 
+        /* ----- glass cards (original) ----- */
         .glass-card {
             background: var(--glass);
             backdrop-filter: blur(12px);
@@ -58,7 +60,7 @@
             background: rgba(255,255,255,0.06);
         }
 
-        /* static grid background */
+        /* ----- background grid (static) ----- */
         .bg-grid {
             position: fixed;
             top: 0; left: 0;
@@ -68,6 +70,7 @@
             z-index: -1;
         }
 
+        /* ----- wave effect (kept) ----- */
         @keyframes waterWave {
             0% { transform: scale(1); opacity: 1; }
             100% { transform: scale(4); opacity: 0; }
@@ -85,7 +88,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* sections & parallax collage */
+        /* ----- sections & parallax containers ----- */
         section {
             position: relative;
             min-height: 100vh;
@@ -94,61 +97,54 @@
             justify-content: center;
             padding: 2rem;
             z-index: 2;
-            overflow: hidden;
+            overflow: hidden;          /* constrain parallax layers */
         }
 
-        /* collage container – absolute fill, holds all floating images */
-        .parallax-collage {
+        /* background layers (parallax) */
+        .parallax-bg {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;      /* so buttons stay clickable */
-        }
-
-        /* each image in the collage */
-        .parallax-item {
-            position: absolute;
+            top: -10%; left: 0;
+            width: 100%;
+            height: 120%;              /* extra height for smooth movement */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            z-index: 0;
             will-change: transform;
-            filter: brightness(0.6) saturate(1.3);
-            border-radius: 12px;
-            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.7);
-            border: 1px solid rgba(255,255,255,0.1);
-            pointer-events: none;       /* keep interaction with text/buttons */
+            filter: brightness(0.35) saturate(1.2);  /* dark & moody, text readable */
         }
 
-        /* overlay for readability, sits above images but below text */
+        /* overlay for extra readability */
         .section-overlay {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: radial-gradient(circle at 30% 30%, rgba(0,0,0,0.3), rgba(0,0,0,0.85));
+            background: radial-gradient(circle at 30% 30%, rgba(0,0,0,0.4), rgba(0,0,0,0.85));
             z-index: 1;
             pointer-events: none;
         }
 
-        /* all text/content should be above overlay */
-        section > *:not(.parallax-collage):not(.section-overlay) {
+        /* content should sit above overlay */
+        section > *:not(.parallax-bg):not(.section-overlay) {
             position: relative;
             z-index: 3;
         }
 
+        /* hidden section (original workspace) */
         .hidden-section { display: none; }
 
+        /* small adjustments */
         .nav-link { transition: color 0.2s; }
     </style>
 </head>
 <body>
 
-    <!-- custom cursor -->
+    <!-- custom cursor elements -->
     <div id="cursor"></div>
     <div id="cursor-blur"></div>
     <div class="bg-grid"></div>
 
-    <!-- navigation (same) -->
+    <!-- navigation (original) -->
     <nav class="fixed top-0 w-full z-50 p-6 flex justify-between items-center backdrop-blur-md border-b border-white/10">
         <div class="text-xl font-extrabold tracking-tighter uppercase">Naman <span class="text-blue-500">.</span></div>
         <div class="space-x-8 text-sm font-medium uppercase tracking-widest opacity-70">
@@ -158,21 +154,10 @@
         </div>
     </nav>
 
-    <!-- ========== SECTION 1 : HERO — gaming + editing collage (4-5 images) ========== -->
+    <!-- ========== SECTION 1 : HERO with GAMING PC / EDITING RIG ========== -->
     <section id="home-section" class="text-center">
-        <!-- collage of 5 images: gaming pc, editing timeline, keyboard, neon, dual monitors -->
-        <div class="parallax-collage">
-            <!-- gaming pc with rgb (back left) -->
-            <div class="parallax-item" data-speed="-0.15" style="top: 5%; left: -2%; width: 38%; height: 40%; background-image: url('https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-3deg);"></div>
-            <!-- video editing timeline (center, large) -->
-            <div class="parallax-item" data-speed="-0.25" style="top: 15%; left: 25%; width: 45%; height: 50%; background-image: url('https://images.unsplash.com/photo-1574717024453-354056afc0c1?q=80&w=2070&auto=format&fit=crop'); transform: rotate(2deg); border: 2px solid rgba(59,130,246,0.3);"></div>
-            <!-- mechanical keyboard typing (bottom right) -->
-            <div class="parallax-item" data-speed="-0.35" style="bottom: 5%; right: 5%; width: 32%; height: 32%; background-image: url('https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=2070&auto=format&fit=crop'); transform: rotate(4deg);"></div>
-            <!-- dual monitor setup (left middle) -->
-            <div class="parallax-item" data-speed="-0.2" style="top: 40%; left: 8%; width: 28%; height: 30%; background-image: url('https://images.unsplash.com/photo-1598550476446-0c4a4d1a3d6f?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-5deg);"></div>
-            <!-- genz neon / gaming vibe (top right) -->
-            <div class="parallax-item" data-speed="-0.3" style="top: 0%; right: -2%; width: 30%; height: 35%; background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop'); transform: rotate(6deg); opacity: 0.9;"></div>
-        </div>
+        <!-- parallax background: gaming pc + timeline vibe -->
+        <div class="parallax-bg" id="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=2070&auto=format&fit=crop'); background-position: 50% 30%;"></div>
         <div class="section-overlay"></div>
 
         <h1 class="text-5xl md:text-8xl font-extrabold mb-6 gradient-text" id="main-title">
@@ -190,20 +175,10 @@
         </div>
     </section>
 
-    <!-- ========== SECTION 2 : PHILOSOPHY — again 4-5 image collage (video editing, typing, pc parts) ========== -->
+    <!-- ========== SECTION 2 : PHILOSOPHY with VIDEO TIMELINE / TYPING ========== -->
     <section id="philosophy-section">
-        <div class="parallax-collage">
-            <!-- timeline closeup (main) -->
-            <div class="parallax-item" data-speed="-0.2" style="top: 0%; left: 10%; width: 40%; height: 45%; background-image: url('https://images.unsplash.com/photo-1574717024653-8fd9e7f3a1c3?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-2deg);"></div>
-            <!-- hands typing on RGB keyboard -->
-            <div class="parallax-item" data-speed="-0.3" style="bottom: 5%; right: 5%; width: 35%; height: 38%; background-image: url('https://images.unsplash.com/photo-1595225476474-87563907c212?q=80&w=2070&auto=format&fit=crop'); transform: rotate(3deg);"></div>
-            <!-- gaming mouse + pad (genz) -->
-            <div class="parallax-item" data-speed="-0.25" style="top: 20%; right: 15%; width: 28%; height: 28%; background-image: url('https://images.unsplash.com/photo-1603487742131-4160c999306f?q=80&w=2070&auto=format&fit=crop'); transform: rotate(8deg);"></div>
-            <!-- editing studio with monitors -->
-            <div class="parallax-item" data-speed="-0.15" style="bottom: 15%; left: 2%; width: 32%; height: 34%; background-image: url('https://images.unsplash.com/photo-1587202372634-3270e8c0d9b1?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-4deg);"></div>
-            <!-- neon gamer setup (vibe) -->
-            <div class="parallax-item" data-speed="-0.35" style="top: 30%; left: 25%; width: 30%; height: 30%; background-image: url('https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=2070&auto=format&fit=crop'); transform: rotate(5deg); opacity: 0.8;"></div>
-        </div>
+        <!-- background: editing timeline + hands typing (combined feel) -->
+        <div class="parallax-bg" id="philosophy-bg" style="background-image: url('https://images.unsplash.com/photo-1574717024453-354056afc0c1?q=80&w=2070&auto=format&fit=crop'); background-position: 50% 40%;"></div>
         <div class="section-overlay"></div>
 
         <h2 class="text-4xl font-bold mb-12 text-center uppercase tracking-tighter">The Philosophy</h2>
@@ -226,24 +201,18 @@
         </div>
     </section>
 
-    <!-- ========== SECTION 3 : RIG / WORKSPACE VIBE — collage of typing, editing, pc ========== -->
+    <!-- ========== SECTION 3 : BONUS VISUAL — MY RIG / TIMELINE CLOSEUP ========== -->
+    <!-- this section purely displays the video editing/gaming atmosphere with typing -->
     <section id="rig-section" class="justify-center items-center">
-        <div class="parallax-collage">
-            <!-- huge mechanical keyboard (foreground) -->
-            <div class="parallax-item" data-speed="-0.4" style="bottom: 0%; left: 5%; width: 45%; height: 40%; background-image: url('https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=2070&auto=format&fit=crop'); transform: rotate(2deg);"></div>
-            <!-- timeline on screen (center) -->
-            <div class="parallax-item" data-speed="-0.2" style="top: 10%; right: 10%; width: 38%; height: 42%; background-image: url('https://images.unsplash.com/photo-1574717024453-354056afc0c1?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-3deg); border: 2px solid var(--accent);"></div>
-            <!-- gaming pc with rgb (top left) -->
-            <div class="parallax-item" data-speed="-0.3" style="top: 0%; left: 15%; width: 30%; height: 32%; background-image: url('https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=2070&auto=format&fit=crop'); transform: rotate(5deg);"></div>
-            <!-- genz neon headset (bottom right) -->
-            <div class="parallax-item" data-speed="-0.25" style="bottom: 15%; right: 2%; width: 28%; height: 28%; background-image: url('https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&w=2070&auto=format&fit=crop'); transform: rotate(-6deg);"></div>
-        </div>
+        <!-- background: closeup of keyboard + timeline on screen (typing vibe) -->
+        <div class="parallax-bg" id="rig-bg" style="background-image: url('https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=2070&auto=format&fit=crop'); background-position: 50% 50%;"></div>
         <div class="section-overlay" style="background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.8));"></div>
 
         <div class="relative z-10 text-center max-w-3xl mx-auto">
             <span class="text-blue-400 tracking-[0.3em] text-sm font-bold">/// THE WORKSPACE</span>
             <h2 class="text-5xl md:text-7xl font-black mt-4 mb-6 leading-tight">gaming. editing.<br>typing. creating.</h2>
             <p class="text-white/70 text-lg">Behind every frame — a liquid timeline, a silent keyboard, and a machine that never sleeps.</p>
+            <!-- small stat cards with glass -->
             <div class="flex flex-wrap justify-center gap-4 mt-12">
                 <div class="glass-card px-6 py-3 rounded-full text-sm font-mono">⚡ 4K 120fps timeline</div>
                 <div class="glass-card px-6 py-3 rounded-full text-sm font-mono">🎮 RTX 4090 / i9</div>
@@ -252,16 +221,10 @@
         </div>
     </section>
 
-    <!-- ========== SECTION 4 : PRICING / WORKSPACE (hidden initially) with subtle collage ========== -->
+    <!-- ========== SECTION 4 : PRICING / WORKSPACE (original hidden, now shown after click) ========== -->
     <section id="workspace-section" class="hidden-section">
-        <div class="parallax-collage">
-            <!-- soft editing desk -->
-            <div class="parallax-item" data-speed="-0.1" style="top: 10%; left: 5%; width: 35%; height: 30%; background-image: url('https://images.unsplash.com/photo-1587202372634-3270e8c0d9b1?q=80&w=2070&auto=format&fit=crop'); opacity: 0.5; transform: rotate(-2deg);"></div>
-            <!-- keyboard closeup -->
-            <div class="parallax-item" data-speed="-0.2" style="bottom: 5%; right: 5%; width: 30%; height: 28%; background-image: url('https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=2070&auto=format&fit=crop'); opacity: 0.5; transform: rotate(3deg);"></div>
-            <!-- gaming monitor -->
-            <div class="parallax-item" data-speed="-0.15" style="top: 30%; right: 15%; width: 28%; height: 28%; background-image: url('https://images.unsplash.com/photo-1598550476446-0c4a4d1a3d6f?q=80&w=2070&auto=format&fit=crop'); opacity: 0.5; transform: rotate(5deg);"></div>
-        </div>
+        <!-- background: subtle editing desk / timeline (softer) -->
+        <div class="parallax-bg" id="workspace-bg" style="background-image: url('https://images.unsplash.com/photo-1587202372634-3270e8c0d9b1?q=80&w=2070&auto=format&fit=crop'); background-position: 50% 60%;"></div>
         <div class="section-overlay" style="background: rgba(0,0,0,0.7);"></div>
 
         <h2 class="text-5xl font-black mb-16 text-center uppercase">Pricing & Packages</h2>
@@ -328,7 +291,84 @@
     </section>
 
     <script>
+        // GSAP + ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
-        // custom cursor
-        const cursor = document.getElementByI
+        // ----- custom cursor (original) -----
+        const cursor = document.getElementById('cursor');
+        const blur = document.getElementById('cursor-blur');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+            gsap.to(blur, { x: e.clientX - 100, y: e.clientY - 100, duration: 0.6 });
+        });
+
+        // ----- initial animation for main title (original) -----
+        gsap.from("#main-title", { y: 100, opacity: 0, duration: 1.5, ease: "power4.out" });
+
+        // ----- PARALLAX SCROLL for each background (video editing, gaming, typing) -----
+        // Select all .parallax-bg elements
+        const parallaxLayers = document.querySelectorAll('.parallax-bg');
+        parallaxLayers.forEach(layer => {
+            // determine speed factor based on data or default -0.2 (moves slower than scroll)
+            gsap.to(layer, {
+                y: () => (layer.offsetHeight * 0.2),          // move 20% of its height
+                ease: "none",
+                scrollTrigger: {
+                    trigger: layer.parentElement,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 0.8,                               // smooth parallax
+                }
+            });
+        });
+
+        // ----- card reveal on scroll (original) -----
+        gsap.utils.toArray(".glass-card").forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom-=80",
+                    toggleActions: "play none none reverse"
+                },
+                y: 60,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+        });
+
+        // ----- Navigation to Workspace (original) with smooth transition -----
+        function navigateToWorkspace() {
+            const tl = gsap.timeline();
+            tl.to("body", { backgroundColor: "#000", duration: 0.5 })
+              .to("#home-section, #philosophy-section, #rig-section", { opacity: 0, display: "none", duration: 0.5 })
+              .set("#workspace-section", { display: "flex", opacity: 0 })
+              .to("#workspace-section", { opacity: 1, duration: 0.8, ease: "power2.out" });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ----- water wave effect (original) -----
+        function createWave(e) {
+            const card = e.currentTarget;
+            const wave = document.createElement('div');
+            wave.classList.add('wave-effect');
+            
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            wave.style.left = `${x}px`;
+            wave.style.top = `${y}px`;
+            wave.style.width = '20px';
+            wave.style.height = '20px';
+            
+            card.appendChild(wave);
+            setTimeout(() => wave.remove(), 800);
+        }
+
+        // ----- optional: make sure the third section (rig-section) also hides when navigating to workspace -----
+        // it's already included in the tl .to() above
+    </script>
+</body>
+</html>
